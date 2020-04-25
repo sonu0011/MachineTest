@@ -2,158 +2,98 @@ package com.example.machinetest;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
-import android.widget.LinearLayout;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 TableLayout tableLayout;
-    private int flag = 3;
-    private int count = 3;
+    private int start = 1;
+    private int addition = 2; ;
     private static final String TAG = "MainActivity";
+    EditText input;
+    Button result;
+    RecyclerView recyclerView;
+    String fifity = "50";
+    String hundered = "100";
+    List<String> list = new ArrayList<>();
+    String rows;
+    private int count50 =1;
+    Adapter adapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        String fifity = "50";
-        String hundered = "100";
+
         setContentView(R.layout.activity_main);
-        tableLayout = findViewById(R.id.my_tableLayout);
-        for (int i = 1; i <=10 ; i++) {
-            TableRow newRow = new TableRow(this);
-            newRow.setLayoutParams(getLayoutParams());
-            TextView dynamicCOlumn = null;
-            TextView column = null;
-            for (int j = 1; j <= 5 ; j++) {
+        input = findViewById(R.id.num_rows);
+        result  =findViewById(R.id.show_result);
+        recyclerView = findViewById(R.id.recycleView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setHasFixedSize(true);
 
 
 
-               if(flag >= i) {
-
-                   if(i%2 == 0){
-                       if(i == j*2){
-                          dynamicCOlumn = new TextView(this);
-                          dynamicCOlumn.setText(hundered);
-                          setAnotherParms(dynamicCOlumn);
-                          newRow.addView(dynamicCOlumn);
-
-                       }
-                       else {
-                           column = new TextView(this);
-                           column.setText(fifity);
-                           setParms(column);
-                           newRow.addView(column);
+        result.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
 
-                       }
+                rows = input.getText().toString().trim();
 
 
-                   }
-                   else if (i%2 ==1){
-                       if(j ==i+1){
+                if (rows.isEmpty()) {
+                    Toast.makeText(MainActivity.this, "Please Enter Number of Columns", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
-                           dynamicCOlumn = new TextView(this);
-                           dynamicCOlumn.setText(hundered);
-                           setAnotherParms(dynamicCOlumn);
-                           newRow.addView(dynamicCOlumn);
-
-                       }
-                       else {
-                           column = new TextView(this);
-                           column.setText(fifity);
-                           setParms(column);
-                           newRow.addView(column);
-                       }
-                   }
-
-               }
-               else {
-                   Log.d(TAG, "onCreate: else part"+i);
-
-                   if (i == flag+count) {
-                       Log.d(TAG, "onCreate: else " + flag + "  " + count + " "+i);
-                       if (flag+count  == j * 2) {
-                           dynamicCOlumn = new TextView(this);
-                           dynamicCOlumn.setText(hundered);
-                           setAnotherParms(dynamicCOlumn);
-                           newRow.addView(dynamicCOlumn);
-                           flag = flag + count;
-                           count++;
-
-                       }
-                       else {
-                           column = new TextView(this);
-                           column.setText(fifity);
-                           setParms(column);
-
-                           newRow.addView(column);
-                       }
-
-                   }
-                   else {
-                       column = new TextView(this);
-                       column.setText(fifity);
-                       setParms(column);
-                       newRow.addView(column);
-                   }
-               }
-
-
+                addtoList();
+                adapter = new Adapter(list);
+                recyclerView.setAdapter(adapter);
 
 
             }
+        });
 
 
-            tableLayout.addView(newRow,getTblLayoutParams());
+
+           }
+
+    private void addtoList() {
+        for (int i = 0; i < Integer.valueOf(rows) ; i++) {
+            if(Collections.frequency(list, "50") == count50){
+                list.add(hundered);
+                start+=addition;
+                addition+=2;
+                count50+=start;
+
+            }
+            else{
+                list.add(fifity);
+            }
 
         }
-    }
-    @NonNull
-    private TableRow.LayoutParams getLayoutParams() {
-        TableRow.LayoutParams params = new TableRow.LayoutParams(
-                TableRow.LayoutParams.MATCH_PARENT,
-                TableRow.LayoutParams.WRAP_CONTENT);
-        params.setMargins(8, 8, 8, 8);
-        return params;
-    }
-    @NonNull
-    private TableLayout.LayoutParams getTblLayoutParams() {
-        return new TableLayout.LayoutParams(
-                TableRow.LayoutParams.MATCH_PARENT,
-                TableRow.LayoutParams.WRAP_CONTENT);
+        for (int i = 0; i <list.size() ; i++) {
+            System.out.print(list.get(i)+" ");
+        }
+
     }
 
-    private void setAnotherParms(TextView column) {
-
-        column.setGravity(Gravity.CENTER);
-        column.setBackgroundColor(Color.BLACK);
-        column.setTextColor(Color.WHITE);
-        column.setTextSize(16);
-        column.setPadding(50, 50, 50, 50);
-        //tv.setBackgroundColor(getResources().getColor(R.color.nice_color));
-        column.setLayoutParams(getLayoutParams());
-
-        //column.setWidth(100);
-        //column.setHeight(100);
-//    }
-    }
-
-    private void setParms(TextView column) {
-        column.setGravity(Gravity.CENTER);
-        column.setBackgroundColor(Color.BLACK);
-        column.setTextColor(Color.WHITE);
-        column.setTextSize(16);
-        column.setPadding(30, 30, 30, 30);
-        column.setLayoutParams(getLayoutParams());
-
-        //column.setWidth(50);
-        //column.setHeight(50);
-    }
 }

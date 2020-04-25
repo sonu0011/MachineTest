@@ -1,25 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-
-<androidx.appcompat.widget.LinearLayoutCompat
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:padding="10dp"
-    android:layout_margin="5sp"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
-<TableLayout
-    android:layout_width="match_parent"
-    android:layout_margin="5sp"
-    android:layout_height="wrap_content"
-    android:stretchColumns="*"
+    android:orientation="vertical">
 
-    android:id="@+id/my_tableLayout"/>
+    <EditText
+        android:id="@+id/num_rows"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5sp"
+        android:gravity="start"
+        android:hint="Enter number of cells want to display"
+        android:padding="10dp" />
 
+    <Button
+        android:id="@+id/show_result"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="5sp"
+        android:gravity="center"
+        android:text="Show Result" />
 
-</androidx.appcompat.widget.LinearLayoutCompat>
-</ScrollView>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycleView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="5sp"
+        android:padding="5sp" />
+
+</LinearLayout>
