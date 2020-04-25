@@ -1,54 +1,41 @@
 package com.example.machinetest;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-TableLayout tableLayout;
     private int start = 1;
-    private int addition = 2; ;
-    private static final String TAG = "MainActivity";
+    private int addition = 2;
     EditText input;
     Button result;
     RecyclerView recyclerView;
     String fifity = "50";
     String hundered = "100";
-    List<String> list = new ArrayList<>();
     String rows;
-    private int count50 =1;
-    Adapter adapter;
-
+    private int count50 = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
+
         input = findViewById(R.id.num_rows);
-        result  =findViewById(R.id.show_result);
+        result = findViewById(R.id.show_result);
         recyclerView = findViewById(R.id.recycleView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
-
 
 
         result.setOnClickListener(new View.OnClickListener() {
@@ -60,40 +47,43 @@ TableLayout tableLayout;
 
 
                 if (rows.isEmpty()) {
-                    Toast.makeText(MainActivity.this, "Please Enter Number of Columns", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "Please enter number of cells", Toast.LENGTH_SHORT).show();
                     return;
                 }
-
-                addtoList();
-                adapter = new Adapter(list);
-                recyclerView.setAdapter(adapter);
+                addtolist();
 
 
             }
         });
 
 
+    }
 
-           }
-
-    private void addtoList() {
-        for (int i = 0; i < Integer.valueOf(rows) ; i++) {
-            if(Collections.frequency(list, "50") == count50){
+    private void addtolist() {
+        List<String> list = new ArrayList<>();
+        for (int i = 0; i < Integer.valueOf(rows); i++) {
+            if (Collections.frequency(list, "50") == count50) {
                 list.add(hundered);
-                start+=addition;
-                addition+=2;
-                count50+=start;
+                start += addition;
+                addition += 2;
+                count50 += start;
 
-            }
-            else{
+            } else {
                 list.add(fifity);
             }
 
         }
-        for (int i = 0; i <list.size() ; i++) {
-            System.out.print(list.get(i)+" ");
-        }
+
+        start = 1;
+        addition = 2;
+        count50 = 1;
+
+
+        Adapter adapter = new Adapter(list);
+        recyclerView.setAdapter(adapter);
+
 
     }
+
 
 }
