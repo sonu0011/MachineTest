@@ -1,6 +1,7 @@
 package com.example.machinetest;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -34,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         input = findViewById(R.id.num_rows);
         result = findViewById(R.id.show_result);
         recyclerView = findViewById(R.id.recycleView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(new GridLayoutManager(this,5));
         recyclerView.setHasFixedSize(true);
 
 
